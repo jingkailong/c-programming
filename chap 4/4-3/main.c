@@ -1,15 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <math.h>
 
 #define NUMBER '0'
 #define MAX_OP 100
+/* Exercise 4-3. Given the basic framework, it's straightforward to extend the calculator.
+Add the modulus (%) operator and provisions for negative numbers.
+*/
 void push(double value);
 double pop();
 int getop(char s[]);
 int main()
 {
-    int type,op2;
+    int type;
+    double op2;
     char s[MAX_OP];
 
     while ((type = getop(s)) != EOF)
@@ -31,6 +36,17 @@ int main()
 
         case '*':
             push(pop() * pop());
+            break;
+        case '%':
+            op2 = pop();
+            if (op2 != 0)
+            {
+                push(fmod(pop(),op2));
+            }
+            else
+            {
+                printf("mod by zero,not ok\n");
+            }
             break;
 
         case '/':
@@ -94,14 +110,22 @@ int getop(char s[])
         ;
     s[1] = '\0';
 
-    if (!isdigit(c) && c != '.')
+    if (!isdigit(c) && c != '.' && c !='-')
         return c;
     i = 0;
-    if (isdigit(c)) /* case 1*/
+    if (c == '-')
     {
+        s[i] = c;
         while (isdigit(s[++i] = c = getch()))
             ;
     }
+    else if (isdigit(c))
+    {
+        while (isdigit(s[++i] = c = getch()))
+            ;
+
+    }
+
     if (c == '.')
     {
         while (isdigit(s[++i] = c = getch()))
@@ -113,7 +137,7 @@ int getop(char s[])
 
     if (c != EOF)
     {
-        ungetch(c); /* put other chs like operand into buf, so we can get it from the buf next time */
+        ungetch(c); /* put other chs like blanks into buf, so we can get it from the buf next time */
     }
 
     return NUMBER;

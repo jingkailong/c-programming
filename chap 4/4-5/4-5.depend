@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1634095061 source:c:\07 c programming\chap 4\4-3\main.c
+1634108969 source:c:\07 c programming\chap 4\4-5\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
+	<string.h>
 	<math.h>
 
