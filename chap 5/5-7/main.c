@@ -3,7 +3,7 @@
 #include <string.h>
 #define MAX_LINES 5
 #define MAX_LINE_LEN 100
-char lineptr[MAX_LINES][1000];
+char* lineptr[MAX_LINES];
 int getline(char* line, int lim)
 {
     int ch;
@@ -22,7 +22,7 @@ void readlines1(int len,int* readlines)
     char line[MAX_LINE_LEN] = {0};
     while ((nline = getline(line,MAX_LINE_LEN))>0)
     {
-        //lineptr[curline] = malloc(nline * sizeof(char));
+        lineptr[curline] = malloc(nline * sizeof(char));
         if (curline >= len)
             return;
         strcpy(lineptr[curline],line);
@@ -38,13 +38,22 @@ void writelines(int len)
 }
 int main()
 {
-    int nxline = 0;
-
-    readlines1(MAX_LINES,&nxline);
-    if (nxline > 0)
+    int charsinline = 0;
+    char line[100];
+    char wholeline[50][100] = {{0}};
+    int i = 0;
+    while ((charsinline = getline(line,100)) > 0)
     {
-        printf("total %d lines\n",nxline);
-        writelines(nxline);
+       if (i >= 50)
+            return -1;
+       strcpy(wholeline[i],line);
+       i++;
+       // writelines(nxline);
+    }
+    int j = 0;
+    for (; j < i; j++)
+    {
+        printf("%s\n",wholeline[j]);
     }
     return 0;
 }
