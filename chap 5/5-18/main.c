@@ -18,6 +18,8 @@ char out[1000];
 
 int getch(void);
 void ungetch(int c);
+/* In words, a dcl is a direct-dcl, perhaps preceded by *'s.
+. */
 void dcl(void)
 {
     int ns;
@@ -27,7 +29,8 @@ void dcl(void)
     while (ns-- > 0)
         strcat(out," pointer to");
 }
-/* dirdcl: parse a direct declarator */
+/* dirdcl: parse a direct declarator   A direct-dcl is a name, or a parenthesized dcl, or a direct-dcl followed by parentheses,
+ or a direct-dcl followed by brackets with an optional size */
 void dirdcl(void)
 {
     int type;
@@ -64,7 +67,7 @@ int main()
 {
     while (gettoken() != EOF)
     {
-        strcpy(datatype,token);
+        strcpy(datatype,token); /*a declaration starts with type firstly*/
         out[0] = '\0';
         dcl();
         if (tokentype != '\n')
@@ -120,12 +123,12 @@ char buf[BUFSIZE]; /* buffer for ungetch */
 int bufp = 0; /* next free position in buf */
 int getch(void) /* get a (possibly pushed-back) character */
 {
-return (bufp > 0) ? buf[--bufp] : getchar();
+    return (bufp > 0) ? buf[--bufp] : getchar();
 }
 void ungetch(int c) /* push character back on input */
 {
-if (bufp >= BUFSIZE)
-printf("ungetch: too many characters\n");
-else
-buf[bufp++] = c;
+    if (bufp >= BUFSIZE)
+    printf("ungetch: too many characters\n");
+    else
+    buf[bufp++] = c;
 }
