@@ -3,3 +3,9 @@
 	<stdio.h>
 	<stdlib.h>
 
+1634975519 source:d:\01 github\c-programming\chap 6\6-3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+
